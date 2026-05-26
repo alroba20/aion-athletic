@@ -6,424 +6,758 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Aion Athletic"/>
-<meta name="theme-color" content="#C0392B"/>
+<meta name="theme-color" content="#E8533A"/>
 <title>Aion Athletic</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --red:#C0392B;--red2:#E74C3C;--dark:#1C2B3A;--teal:#1ABC9C;--orange:#E67E22;
-  --bg:#F6F4F0;--card:#FFFFFF;--border:#E8E4DF;--text:#1A1A1A;--muted:#888;
+  --red:#E8533A;--red2:#ff6b52;--dark:#0f1923;--dark2:#1a2332;--dark3:#242f3e;
+  --sidebar-w:220px;--text:#f0f4f8;--muted:#7a8fa6;--border:#2a3a4e;
+  --card:#1a2332;--card2:#1e2a3a;--teal:#00d4aa;--orange:#f59e0b;--blue:#3b82f6;--purple:#8b5cf6;
   --safe-top:env(safe-area-inset-top);--safe-bot:env(safe-area-inset-bottom);
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden}
-#topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(246,244,240,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:calc(var(--safe-top) + 10px) 16px 10px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.15rem;font-weight:800;letter-spacing:.04em;color:var(--dark)}
-.logo span{color:var(--red)}
-.sync-btn{background:none;border:none;font-size:1.3rem;cursor:pointer;padding:4px}
-#tabs{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(246,244,240,.97);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding:8px 0 calc(var(--safe-bot) + 4px)}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;cursor:pointer;padding:4px 0;color:var(--muted);font-size:.6rem;font-weight:500;transition:color .2s}
-.tab.active{color:var(--red)}
-.tab svg{width:22px;height:22px}
-#main{padding-top:calc(var(--safe-top) + 56px);padding-bottom:calc(var(--safe-bot) + 72px);min-height:100dvh}
-.view{display:none;padding:16px;animation:fadeIn .2s ease}
+html,body{height:100%;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:var(--dark);color:var(--text);display:flex}
+
+/* ── SIDEBAR ── */
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--dark2);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100dvh;overflow-y:auto;padding-bottom:16px}
+.sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.sidebar-logo-title{font-size:1.1rem;font-weight:800;letter-spacing:.06em;color:var(--text);display:flex;align-items:center;gap:8px}
+.sidebar-logo-icon{width:28px;height:28px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.sidebar-logo-sub{font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.sidebar-section{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:12px 16px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;border-radius:0;font-size:.82rem;color:var(--muted);transition:all .15s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.nav-item.active{background:rgba(232,83,58,.1);color:var(--red);border-left-color:var(--red)}
+.nav-item svg{width:16px;height:16px;flex-shrink:0}
+.sidebar-races{margin:12px 12px 0;background:var(--dark3);border-radius:10px;padding:10px 12px}
+.sidebar-races-title{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sidebar-race-item{margin-bottom:8px}
+.sidebar-race-name{font-size:.72rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-race-days{font-size:1.1rem;font-weight:900;color:var(--red);line-height:1}
+.sidebar-race-weeks{font-size:.62rem;color:var(--muted)}
+.sidebar-race-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px}
+.sidebar-race-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--red),var(--orange))}
+
+/* ── MAIN ── */
+#main{flex:1;display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+#topbar{background:var(--dark2);border-bottom:1px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:1.1rem;font-weight:700;letter-spacing:.04em}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--muted);font-size:.8rem;display:flex;align-items:center;gap:5px;transition:all .15s}
+.icon-btn:hover{color:var(--text);border-color:var(--muted)}
+.icon-btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.icon-btn.primary:hover{background:var(--red2)}
+#content{flex:1;overflow-y:auto;padding:24px}
+
+/* ── VIEWS ── */
+.view{display:none;animation:fadeIn .2s ease}
 .view.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:14px}
-.card-title{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
-.countdown-num{font-size:3.5rem;font-weight:900;color:var(--red);line-height:1}
-.countdown-sub{font-size:.85rem;color:var(--muted);margin-top:2px}
-.prog-bar{height:5px;background:var(--border);border-radius:3px;margin-top:10px;overflow:hidden}
-.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--orange));transition:width .5s}
-.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.metric-box{background:var(--bg);border-radius:12px;padding:12px}
-.metric-icon{font-size:1.1rem;margin-bottom:4px}
-.metric-val{font-size:1.4rem;font-weight:800;color:var(--text)}
-.metric-label{font-size:.65rem;color:var(--muted);margin-top:1px}
-.session-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
-.session-item:last-child{border-bottom:none}
-.session-emoji{font-size:1.6rem;width:36px;text-align:center;flex-shrink:0}
-.session-info{flex:1;min-width:0}
-.session-name{font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.session-meta{font-size:.72rem;color:var(--muted);margin-top:2px}
-.session-zone{font-size:.65rem;background:rgba(192,57,43,.1);color:var(--red);padding:2px 7px;border-radius:10px;font-weight:600;white-space:nowrap;flex-shrink:0}
-.check-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:none;font-size:1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.check-btn.done{background:var(--teal);border-color:var(--teal);color:#fff}
-.plan-day{margin-bottom:18px}
-.plan-day-header{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding:4px 0;border-bottom:1px solid var(--border)}
-.plan-day-header.today-header{color:var(--red)}
-.chart-wrap{height:120px;display:flex;align-items:flex-end;gap:3px;padding-top:8px}
-.chart-bar{flex:1;border-radius:3px 3px 0 0;min-height:3px;transition:height .4s}
-.chart-labels{display:flex;justify-content:space-between;margin-top:4px}
-.chart-label{font-size:.55rem;color:var(--muted);text-align:center;flex:1}
-.ai-messages{max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px 0 12px}
-.ai-msg{max-width:88%;padding:10px 13px;border-radius:16px;font-size:.85rem;line-height:1.5}
-.ai-msg.bot{background:var(--bg);border-radius:4px 16px 16px 16px;align-self:flex-start}
-.ai-msg.user{background:var(--red);color:#fff;border-radius:16px 4px 16px 16px;align-self:flex-end}
-.ai-input-wrap{display:flex;gap:8px;margin-top:8px}
-.ai-input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:9px 12px;font-size:.88rem;background:var(--bg);outline:none;font-family:inherit}
-.ai-input:focus{border-color:var(--red)}
-.ai-send{background:var(--red);border:none;border-radius:10px;padding:9px 16px;color:#fff;font-size:.85rem;font-weight:600;cursor:pointer}
-.nut-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.nut-box{background:var(--bg);border-radius:10px;padding:10px 6px;text-align:center}
-.nut-val{font-size:1.1rem;font-weight:800}
-.nut-unit{font-size:.6rem;color:var(--muted);margin-top:1px}
-.nut-tip{background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:8px}
-.nut-tip-label{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);margin-bottom:3px}
-.nut-tip-val{font-size:.82rem;color:var(--text)}
-.form-group{margin-bottom:14px}
-.form-label{font-size:.72rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;display:block}
-.form-input,.form-select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:.9rem;background:#fff;font-family:inherit;outline:none;color:var(--text)}
-.form-input:focus,.form-select:focus{border-color:var(--red)}
-.btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s}
-.btn-primary{background:var(--red);color:#fff}
-.btn-primary:active{background:#a02520}
-.btn-secondary{background:var(--bg);color:var(--text);border:1.5px solid var(--border)}
-.btn-teal{background:var(--teal);color:#fff}
-.btn-sm{padding:8px 14px;width:auto;font-size:.8rem;border-radius:8px}
-.race-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
-.race-item:last-child{border-bottom:none}
-.race-name{font-weight:600;font-size:.9rem}
-.race-meta{font-size:.72rem;color:var(--muted);margin-top:2px}
-.race-days{font-size:1.3rem;font-weight:900;color:var(--red)}
-.race-days-label{font-size:.6rem;color:var(--muted)}
-.badge{display:inline-block;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.06em}
-.badge-gold{background:rgba(241,196,15,.2);color:#b8860b}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
-.cal-header{font-size:.6rem;color:var(--muted);font-weight:600;padding:4px 0}
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:.72rem;cursor:default}
-.cal-day.has-session{background:rgba(192,57,43,.12);color:var(--red);font-weight:700}
-.cal-day.today{background:var(--red);color:#fff;font-weight:700}
-.cal-day.other-month{color:var(--border)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card-sm{padding:14px}
+.card-title{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+
+/* ── STAT BOXES ── */
+.stat-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.stat-val{font-size:1.6rem;font-weight:900;line-height:1;margin-bottom:2px}
+.stat-label{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.stat-delta{font-size:.7rem;margin-top:4px}
+.delta-up{color:var(--teal)}
+.delta-down{color:var(--red)}
+
+/* ── WEEK PLAN ── */
+.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.week-nav-btn{background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--muted);font-size:1rem;transition:all .15s}
+.week-nav-btn:hover{color:var(--text)}
+.week-label{text-align:center}
+.week-label-main{font-size:1rem;font-weight:700}
+.week-label-sub{font-size:.7rem;color:var(--muted)}
+.week-phase-badge{display:inline-block;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.08em;margin-left:8px}
+.phase-base{background:rgba(59,130,246,.2);color:#60a5fa}
+.phase-build{background:rgba(245,158,11,.2);color:#fbbf24}
+.phase-peak{background:rgba(232,83,58,.2);color:var(--red)}
+.phase-race{background:rgba(139,92,246,.2);color:#a78bfa}
+.phase-recovery{background:rgba(0,212,170,.2);color:var(--teal)}
+.week-objective{background:var(--dark3);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:16px;font-size:.83rem;color:var(--text)}
+.week-objective strong{color:var(--blue);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px}
+.days-row{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.day-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s;min-height:110px;display:flex;flex-direction:column;align-items:center}
+.day-card:hover{border-color:var(--muted)}
+.day-card.today{border-color:var(--red);background:rgba(232,83,58,.08)}
+.day-card.done{opacity:.6}
+.day-card.rest{opacity:.4}
+.day-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.day-sport-icon{font-size:1.5rem;margin-bottom:4px}
+.day-sport-name{font-size:.65rem;font-weight:600;color:var(--text)}
+.day-duration{font-size:.62rem;color:var(--muted);margin-top:2px}
+.day-zone{font-size:.58rem;padding:1px 5px;border-radius:6px;margin-top:3px;font-weight:600}
+.zone-z1{background:rgba(0,212,170,.15);color:var(--teal)}
+.zone-z2{background:rgba(59,130,246,.15);color:#60a5fa}
+.zone-z3{background:rgba(245,158,11,.15);color:#fbbf24}
+.zone-z4{background:rgba(232,83,58,.15);color:var(--red)}
+.zone-z5{background:rgba(139,92,246,.15);color:#a78bfa}
+.week-totals{display:flex;gap:16px;margin-top:14px;padding:12px 16px;background:var(--dark3);border-radius:10px}
+.week-total-item{display:flex;align-items:center;gap:8px;font-size:.78rem}
+.week-total-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.week-total-val{font-weight:700;color:var(--text)}
+.week-total-label{color:var(--muted)}
+
+/* ── CHARTS ── */
+.chart-container{position:relative;width:100%}
+.bar-chart{display:flex;align-items:flex-end;gap:4px;height:100px;padding-top:8px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height .4s}
+.bar-label{font-size:.55rem;color:var(--muted);text-align:center}
+.bar-val{font-size:.55rem;color:var(--muted);text-align:center}
+.line-chart{height:80px;width:100%;position:relative}
+.line-chart svg{width:100%;height:100%}
+
+/* ── CALENDAR ── */
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.cal-nav-btn{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text);padding:4px 8px}
-.cal-month-label{font-weight:700;font-size:1rem}
-#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:#fff;padding:10px 20px;border-radius:20px;font-size:.82rem;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+.cal-nav-btn{background:var(--dark3);border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;color:var(--muted);font-size:1rem}
+.cal-month{font-weight:700;font-size:.95rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-head{font-size:.58rem;color:var(--muted);text-align:center;padding:4px 0;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:.72rem;cursor:default;position:relative;flex-direction:column;gap:1px}
+.cal-day.has-s{background:rgba(232,83,58,.15);color:var(--red);font-weight:700}
+.cal-day.has-s.swim{background:rgba(59,130,246,.15);color:#60a5fa}
+.cal-day.has-s.bike{background:rgba(0,212,170,.15);color:var(--teal)}
+.cal-day.has-s.run{background:rgba(232,83,58,.15);color:var(--red)}
+.cal-day.has-s.strength{background:rgba(139,92,246,.15);color:#a78bfa}
+.cal-day.today-cal{background:var(--red);color:#fff;font-weight:700}
+.cal-day.other{color:var(--border)}
+.cal-day-dot{width:4px;height:4px;border-radius:50%;background:currentColor}
+
+/* ── PROGRESS TABS ── */
+.tab-bar{display:flex;gap:4px;background:var(--dark3);border-radius:10px;padding:4px;margin-bottom:20px}
+.tab-btn{flex:1;padding:7px 10px;border:none;border-radius:7px;background:transparent;color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.tab-btn.active{background:var(--card);color:var(--text)}
+
+/* ── AVAILABILITY ── */
+.avail-day-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.avail-day-name{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text);margin-bottom:10px}
+.avail-sport-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)}
+.avail-sport-row:last-child{border-bottom:none}
+.avail-sport-name{font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.avail-dur-input{width:60px;background:var(--dark3);border:1px solid var(--border);border-radius:6px;padding:3px 6px;color:var(--text);font-size:.75rem;text-align:center;font-family:inherit}
+.avail-toggle{width:36px;height:20px;border-radius:10px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.avail-toggle.on{background:var(--teal)}
+.avail-toggle.off{background:var(--border)}
+.avail-toggle::after{content:'';position:absolute;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s}
+.avail-toggle.on::after{left:18px}
+.avail-toggle.off::after{left:2px}
+.exception-card{background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+
+/* ── FORMS ── */
+.form-group{margin-bottom:14px}
+.form-label{font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:block}
+.form-input,.form-select{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:.88rem;font-family:inherit;outline:none;transition:border-color .2s}
+.form-input:focus,.form-select:focus{border-color:var(--red)}
+.form-select option{background:var(--dark2)}
+.btn{padding:10px 18px;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-primary{background:var(--red);color:#fff}
+.btn-primary:hover{background:var(--red2)}
+.btn-secondary{background:var(--dark3);color:var(--text);border:1px solid var(--border)}
+.btn-block{width:100%}
+.btn-sm{padding:6px 12px;font-size:.78rem}
+
+/* ── SESSION LIST ── */
+.session-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.session-row:last-child{border-bottom:none}
+.session-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.si-swim{background:rgba(59,130,246,.15)}
+.si-bike{background:rgba(0,212,170,.15)}
+.si-run{background:rgba(232,83,58,.15)}
+.si-strength{background:rgba(139,92,246,.15)}
+.si-stretch{background:rgba(245,158,11,.15)}
+.session-info{flex:1;min-width:0}
+.session-name{font-size:.85rem;font-weight:600}
+.session-meta{font-size:.7rem;color:var(--muted);margin-top:1px}
+.session-source{font-size:.6rem;padding:1px 6px;border-radius:8px;font-weight:600}
+.src-garmin{background:rgba(0,212,170,.15);color:var(--teal)}
+.src-wahoo{background:rgba(59,130,246,.15);color:#60a5fa}
+.src-manual{background:rgba(122,143,166,.15);color:var(--muted)}
+
+/* ── AI CHAT ── */
+.ai-messages{height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px 0 12px;scroll-behavior:smooth}
+.ai-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.83rem;line-height:1.55}
+.ai-msg.bot{background:var(--dark3);border-radius:4px 14px 14px 14px;align-self:flex-start;color:var(--text)}
+.ai-msg.user{background:var(--red);color:#fff;border-radius:14px 4px 14px 14px;align-self:flex-end}
+.ai-input-row{display:flex;gap:8px;margin-top:10px}
+.ai-input{flex:1;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:.85rem;font-family:inherit;outline:none}
+.ai-input:focus{border-color:var(--red)}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dark3);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:20px;font-size:.82rem;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,0,0,.15);border-top-color:var(--red);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:4px}
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(246,244,240,.85);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:12px;font-size:.9rem;color:var(--muted)}
-.loading-overlay.show{display:flex}
-.big-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
+
+/* ── LOADING ── */
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:4px}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(min-width:480px){#main,#topbar,#tabs{max-width:480px;left:50%;right:auto;transform:translateX(-50%);width:100%}#toast{left:calc(50%)}}
+.overlay{display:none;position:fixed;inset:0;background:rgba(15,25,35,.7);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:12px;font-size:.9rem;color:var(--muted)}
+.overlay.show{display:flex}
+.big-spin{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
+
+/* ── MOBILE ── */
+#menu-toggle{display:none}
+@media(max-width:768px){
+  #sidebar{position:fixed;left:-100%;top:0;bottom:0;z-index:100;transition:left .3s;width:240px}
+  #sidebar.open{left:0}
+  #menu-toggle{display:flex;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;padding:4px}
+  #main{width:100vw}
+}
 </style>
 </head>
 <body>
 
-<div id="topbar">
-  <div class="logo">AION<span>.</span>ATHLETIC</div>
-  <button class="sync-btn" onclick="syncAll()" title="Sincronitzar Garmin">&#x1F504;</button>
-</div>
-
-<div id="main">
-
-  <!-- DASHBOARD -->
-  <div id="view-home" class="view active">
-    <div id="countdown-card" class="card" style="display:none">
-      <div class="card-title">&#x23F1; Compte enrere</div>
-      <div id="countdown-content"></div>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-title">
+      <div class="sidebar-logo-icon">⚡</div>
+      AION ATHLETIC
     </div>
-    <div class="card">
-      <div class="card-title">&#x1F4CA; Estat de forma avui</div>
-      <div class="metrics-grid">
-        <div class="metric-box"><div class="metric-icon">&#x1F4AA;</div><div class="metric-val" id="m-vo2">--</div><div class="metric-label">VO&#x2082; Max</div></div>
-        <div class="metric-box"><div class="metric-icon">&#x2764;&#xFE0F;</div><div class="metric-val" id="m-hr">--</div><div class="metric-label">FC Repos</div></div>
-        <div class="metric-box"><div class="metric-icon">&#x1F634;</div><div class="metric-val" id="m-sleep">--</div><div class="metric-label">Son</div></div>
-        <div class="metric-box"><div class="metric-icon">&#x1F6B6;</div><div class="metric-val" id="m-steps">--</div><div class="metric-label">Passos</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">&#x1F4C5; Pla d'avui</div>
-      <div id="today-plan"><div style="color:var(--muted);font-size:.85rem">Carregant...</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">&#x1F34E; Nutricio avui</div>
-      <div id="nutrition-summary"><div style="color:var(--muted);font-size:.85rem">Carregant...</div></div>
-    </div>
+    <div class="sidebar-logo-sub">Training System</div>
   </div>
 
-  <!-- PLA -->
-  <div id="view-plan" class="view">
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div class="card-title" style="margin-bottom:0">&#x1F5D3; Pla d'entrenament</div>
-        <button class="btn btn-teal btn-sm" onclick="generatePlan()">&#x2728; Generar IA</button>
-      </div>
-      <div id="plan-list"><div style="color:var(--muted);font-size:.85rem">Carregant el pla...</div></div>
-    </div>
+  <div class="sidebar-section">Inici</div>
+  <div class="nav-item active" onclick="nav('dashboard',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Dashboard
+  </div>
+  <div class="nav-item" onclick="nav('forma',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Estat de forma
   </div>
 
-  <!-- HISTORIAL -->
-  <div id="view-history" class="view">
-    <div class="card">
-      <div class="card-title">&#x1F4C6; Calendari</div>
-      <div class="cal-nav">
-        <button class="cal-nav-btn" onclick="changeMonth(-1)">&#x2039;</button>
-        <div class="cal-month-label" id="cal-month-label"></div>
-        <button class="cal-nav-btn" onclick="changeMonth(1)">&#x203A;</button>
-      </div>
-      <div class="cal-grid" id="cal-grid"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">&#x1F3C3; Sessions recents</div>
-      <div id="sessions-list"><div style="color:var(--muted);font-size:.85rem">Carregant...</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:12px">&#x2795; Afegir sessio manual</div>
-      <div class="form-group">
-        <label class="form-label">Data</label>
-        <input class="form-input" type="date" id="new-session-date"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Esport</label>
-        <select class="form-select" id="new-session-sport">
-          <option value="running">&#x1F3C3; Cursa a peu</option>
-          <option value="cycling">&#x1F6B4; Ciclisme</option>
-          <option value="swimming">&#x1F3CA; Natacio</option>
-          <option value="strength">&#x1F4AA; Forca</option>
-          <option value="stretching">&#x1F9D8; Estiraments</option>
-          <option value="triathlon">&#x1F3C5; Triatlo</option>
-        </select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div class="form-group">
-          <label class="form-label">Durada (min)</label>
-          <input class="form-input" type="number" id="new-session-dur" placeholder="60"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Distancia (km)</label>
-          <input class="form-input" type="number" step="0.1" id="new-session-dist" placeholder="10"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Notes</label>
-        <input class="form-input" type="text" id="new-session-notes" placeholder="Sensacions, comentaris..."/>
-      </div>
-      <button class="btn btn-primary" onclick="addSession()">Guardar sessio</button>
-    </div>
+  <div class="sidebar-section">Entrenament</div>
+  <div class="nav-item" onclick="nav('plan',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Pla setmanal
+  </div>
+  <div class="nav-item" onclick="nav('calendar',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Calendari
+  </div>
+  <div class="nav-item" onclick="nav('register',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    Registrar sessió
+  </div>
+  <div class="nav-item" onclick="nav('availability',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
+    Disponibilitat
   </div>
 
-  <!-- RENDIMENT -->
-  <div id="view-performance" class="view">
-    <div class="card">
-      <div class="card-title">&#x1F4C8; VO&#x2082; Max - ultims 30 dies</div>
-      <div class="chart-wrap" id="vo2-chart"></div>
-      <div class="chart-labels" id="vo2-chart-labels"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">&#x1F634; Son - ultims 30 dies</div>
-      <div class="chart-wrap" id="sleep-chart"></div>
-      <div class="chart-labels" id="sleep-chart-labels"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">&#x1F916; Pregunta a la IA</div>
-      <div class="ai-messages" id="ai-messages">
-        <div class="ai-msg bot">Hola! Soc el teu entrenador. Pregunta'm qualsevol cosa sobre els teus entrenaments, el pla o la nutricio.</div>
-      </div>
-      <div class="ai-input-wrap">
-        <input class="ai-input" id="ai-input" placeholder="Ex: Com puc millorar el VO2max?" onkeydown="if(event.key==='Enter')sendAI()"/>
-        <button class="ai-send" onclick="sendAI()">Enviar</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">&#x1F34E; Nutricio avui</div>
-      <div id="nutrition-detail"><div style="color:var(--muted);font-size:.85rem">Carregant...</div></div>
-    </div>
+  <div class="sidebar-section">Anàlisi</div>
+  <div class="nav-item" onclick="nav('progress',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    Progrés
+  </div>
+  <div class="nav-item" onclick="nav('performance',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+    Rendiment
+  </div>
+  <div class="nav-item" onclick="nav('sleep',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    Son
   </div>
 
-  <!-- CONFIGURACIO -->
-  <div id="view-settings" class="view">
-    <div class="card">
-      <div class="card-title">&#x1F464; Perfil</div>
-      <div class="form-group">
-        <label class="form-label">Nom</label>
-        <input class="form-input" id="s-name" placeholder="El teu nom"/>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div class="form-group">
-          <label class="form-label">Pes (kg)</label>
-          <input class="form-input" type="number" step="0.1" id="s-weight" placeholder="72"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Cintura (cm)</label>
-          <input class="form-input" type="number" step="0.5" id="s-waist" placeholder="82"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Idioma</label>
-        <select class="form-select" id="s-lang">
-          <option value="ca">Catala</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">&#x231A; Garmin Connect</div>
-      <div class="form-group">
-        <label class="form-label">Email del compte Garmin</label>
-        <input class="form-input" type="email" id="s-garmin-user" placeholder="correu@exemple.com"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Contrasenya Garmin</label>
-        <input class="form-input" type="password" id="s-garmin-pass" placeholder="contrasenya"/>
-      </div>
-      <button class="btn btn-secondary" style="margin-top:4px" onclick="testGarmin()">Provar connexio Garmin</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">&#x1F916; Intel.ligencia Artificial</div>
-      <div class="form-group">
-        <label class="form-label">Provedor IA</label>
-        <select class="form-select" id="s-ai-provider" onchange="updateAIFields()">
-          <option value="claude">Claude (Anthropic)</option>
-          <option value="gemini">Gemini (Google)</option>
-          <option value="openai">ChatGPT (OpenAI)</option>
-        </select>
-      </div>
-      <div id="ai-f-claude" class="form-group">
-        <label class="form-label">Clau API Claude</label>
-        <input class="form-input" type="password" id="s-claude-key" placeholder="sk-ant-..."/>
-      </div>
-      <div id="ai-f-gemini" class="form-group" style="display:none">
-        <label class="form-label">Clau API Gemini</label>
-        <input class="form-input" type="password" id="s-gemini-key" placeholder="AIza..."/>
-      </div>
-      <div id="ai-f-openai" class="form-group" style="display:none">
-        <label class="form-label">Clau API OpenAI</label>
-        <input class="form-input" type="password" id="s-openai-key" placeholder="sk-..."/>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">&#x2708;&#xFE0F; Telegram</div>
-      <div class="form-group">
-        <label class="form-label">Hora de notificacio diaria</label>
-        <input class="form-input" type="time" id="s-notif-time" value="07:00"/>
-      </div>
-      <div id="telegram-status" style="font-size:.82rem;color:var(--muted)">Per activar: busca el teu bot a Telegram i escriu /start</div>
-    </div>
-
-    <button class="btn btn-primary" style="margin-bottom:14px" onclick="saveSettings()">&#x1F4BE; Guardar configuracio</button>
-
-    <div class="card">
-      <div class="card-title">&#x1F3C1; Competicions</div>
-      <div id="races-list"></div>
-      <div style="height:12px"></div>
-      <div class="form-group">
-        <label class="form-label">Nom de la cursa</label>
-        <input class="form-input" id="race-name" placeholder="Ironman 70.3 Mallorca"/>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div class="form-group">
-          <label class="form-label">Data</label>
-          <input class="form-input" type="date" id="race-date"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Tipus</label>
-          <select class="form-select" id="race-type">
-            <option value="ironman">Ironman</option>
-            <option value="ironman703">Ironman 70.3</option>
-            <option value="triathlon">Triatlo</option>
-            <option value="running">Cursa a peu</option>
-            <option value="cycling">Ciclisme</option>
-            <option value="swimming">Natacio</option>
-          </select>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div class="form-group">
-          <label class="form-label">Distancia</label>
-          <input class="form-input" id="race-dist" placeholder="226 km"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Lloc</label>
-          <input class="form-input" id="race-loc" placeholder="Mallorca"/>
-        </div>
-      </div>
-      <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;margin-bottom:12px;cursor:pointer">
-        <input type="checkbox" id="race-main" style="width:18px;height:18px;accent-color:var(--red)"/>
-        Objectiu principal (Ironman)
-      </label>
-      <button class="btn btn-primary" onclick="addRace()">Afegir competicio</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">&#x1F4C6; Disponibilitat setmanal</div>
-      <div id="availability-grid"></div>
-      <button class="btn btn-secondary" style="margin-top:12px" onclick="saveAvailability()">Guardar disponibilitat</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">&#x1F6AB; Blocjar un dia</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-        <div class="form-group" style="margin-bottom:0">
-          <label class="form-label">Data</label>
-          <input class="form-input" type="date" id="block-date"/>
-        </div>
-        <div class="form-group" style="margin-bottom:0">
-          <label class="form-label">Motiu</label>
-          <input class="form-input" id="block-reason" placeholder="Vacances..."/>
-        </div>
-      </div>
-      <button class="btn btn-secondary" onclick="blockDay()">Blocjar dia</button>
-    </div>
-
-    <div style="text-align:center;font-size:.7rem;color:var(--muted);padding:16px 0">AION ATHLETIC v1.0</div>
+  <div class="sidebar-section">Competició</div>
+  <div class="nav-item" onclick="nav('races',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+    Competicions
   </div>
-</div>
+  <div class="nav-item" onclick="nav('nutrition',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+    Nutrició
+  </div>
 
-<nav id="tabs">
-  <button class="tab active" onclick="showView('home',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inici
-  </button>
-  <button class="tab" onclick="showView('plan',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Pla
-  </button>
-  <button class="tab" onclick="showView('history',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Historial
-  </button>
-  <button class="tab" onclick="showView('performance',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Rendiment
-  </button>
-  <button class="tab" onclick="showView('settings',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Config
-  </button>
+  <div class="sidebar-section">Assistent</div>
+  <div class="nav-item" onclick="nav('ai',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Assistent IA
+  </div>
+  <div class="nav-item" onclick="nav('telegram',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    Telegram
+  </div>
+  <div class="nav-item" onclick="nav('settings',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    Configuració
+  </div>
+
+  <div class="sidebar-races" id="sidebar-races"></div>
 </nav>
 
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="syncAll()">↻ Sync Garmin</button>
+      <button class="icon-btn primary" id="topbar-action-btn" style="display:none"></button>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view active">
+      <div class="grid-4" style="margin-bottom:16px" id="dash-metrics">
+        <div class="stat-box"><div class="stat-val" id="d-vo2" style="color:var(--teal)">--</div><div class="stat-label">VO₂ Max</div></div>
+        <div class="stat-box"><div class="stat-val" id="d-hr" style="color:var(--red)">--</div><div class="stat-label">FC Repòs</div></div>
+        <div class="stat-box"><div class="stat-val" id="d-sleep" style="color:var(--blue)">--</div><div class="stat-label">Son</div></div>
+        <div class="stat-box"><div class="stat-val" id="d-steps" style="color:var(--orange)">--</div><div class="stat-label">Passos</div></div>
+      </div>
+      <div class="grid-2" style="margin-bottom:16px">
+        <div class="card">
+          <div class="card-title">📅 Pla d'avui</div>
+          <div id="dash-today"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 Volum setmana actual</div>
+          <div id="dash-week-volume"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏁 Pròximes competicions</div>
+        <div id="dash-races"></div>
+      </div>
+    </div>
+
+    <!-- ESTAT DE FORMA -->
+    <div id="view-forma" class="view">
+      <div class="grid-4" style="margin-bottom:16px">
+        <div class="stat-box"><div class="stat-val" id="f-vo2" style="color:var(--teal)">--</div><div class="stat-label">VO₂ Max</div><div class="stat-delta" id="f-vo2-delta"></div></div>
+        <div class="stat-box"><div class="stat-val" id="f-hr" style="color:var(--red)">--</div><div class="stat-label">FC Repòs</div></div>
+        <div class="stat-box"><div class="stat-val" id="f-sleep" style="color:var(--blue)">--</div><div class="stat-label">Son</div><div class="stat-delta" id="f-sleep-score"></div></div>
+        <div class="stat-box"><div class="stat-val" id="f-steps" style="color:var(--orange)">--</div><div class="stat-label">Passos</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">VO₂ Max — 30 dies</div>
+          <div class="bar-chart" id="forma-vo2-chart"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">FC Repòs — 30 dies</div>
+          <div class="bar-chart" id="forma-hr-chart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLA SETMANAL -->
+    <div id="view-plan" class="view">
+      <div class="week-nav">
+        <button class="week-nav-btn" onclick="changeWeek(-1)">←</button>
+        <div class="week-label">
+          <div class="week-label-main" id="plan-week-label">Setmana actual</div>
+          <div class="week-label-sub" id="plan-week-sub"></div>
+        </div>
+        <button class="week-nav-btn" onclick="changeWeek(1)">→</button>
+      </div>
+      <div class="week-objective" id="plan-objective"><strong>Objectiu</strong>Carrega el pla per veure l'objectiu de la setmana.</div>
+      <div class="days-row" id="plan-days"></div>
+      <div class="week-totals" id="plan-totals"></div>
+    </div>
+
+    <!-- CALENDARI -->
+    <div id="view-calendar" class="view">
+      <div class="grid-2">
+        <div class="card">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
+            <div class="cal-month" id="cal-month-label"></div>
+            <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Sessions recents</div>
+          <div id="cal-sessions"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTRAR SESSIÓ -->
+    <div id="view-register" class="view">
+      <div class="card" style="max-width:500px">
+        <div class="card-title">Nova sessió manual</div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Data</label>
+            <input class="form-input" type="date" id="reg-date"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Esport</label>
+            <select class="form-select" id="reg-sport">
+              <option value="swimming">🏊 Natació</option>
+              <option value="cycling">🚴 Ciclisme</option>
+              <option value="running">🏃 Cursa</option>
+              <option value="strength">💪 Força</option>
+              <option value="stretching">🧘 Estiraments</option>
+              <option value="triathlon">🏅 Triatló</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Durada (min)</label>
+            <input class="form-input" type="number" id="reg-dur" placeholder="60"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Distància (km)</label>
+            <input class="form-input" type="number" step="0.1" id="reg-dist" placeholder="10"/>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">FC Mitjana</label>
+            <input class="form-input" type="number" id="reg-hr" placeholder="145"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Font</label>
+            <select class="form-select" id="reg-source">
+              <option value="manual">Manual</option>
+              <option value="garmin">Garmin</option>
+              <option value="wahoo">Wahoo</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <input class="form-input" type="text" id="reg-notes" placeholder="Sensacions, comentaris..."/>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="registerSession()">Guardar sessió</button>
+      </div>
+    </div>
+
+    <!-- DISPONIBILITAT -->
+    <div id="view-availability" class="view">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div>
+          <div style="font-size:1rem;font-weight:700">Setmana estàndard</div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:2px">Temps disponible per esport cada dia</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveAvailability()">Guardar</button>
+      </div>
+      <div id="avail-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:24px"></div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div style="font-size:1rem;font-weight:700">Excepcions puntuals</div>
+        <button class="btn btn-secondary btn-sm" onclick="showExceptionForm()">+ Afegir</button>
+      </div>
+      <div id="exceptions-list"></div>
+      <div id="exception-form" style="display:none" class="card card-sm" style="margin-top:12px">
+        <div class="form-group">
+          <label class="form-label">Data</label>
+          <input class="form-input" type="date" id="exc-date"/>
+        </div>
+        <div id="exc-sports-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px"></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" onclick="saveException()">Guardar</button>
+          <button class="btn btn-secondary btn-sm" onclick="hideExceptionForm()">Cancel·lar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRÉS -->
+    <div id="view-progress" class="view">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchProgressTab('volume',this)">Volum</button>
+        <button class="tab-btn" onclick="switchProgressTab('history',this)">Historial</button>
+        <button class="tab-btn" onclick="switchProgressTab('phases',this)">Fases</button>
+        <button class="tab-btn" onclick="switchProgressTab('body',this)">Cos</button>
+      </div>
+      <div id="progress-volume">
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-title">Hores per esport — últimes 8 setmanes</div>
+          <div id="prog-sport-chart" class="bar-chart" style="height:120px"></div>
+          <div id="prog-sport-labels" style="display:flex;gap:4px;margin-top:4px"></div>
+        </div>
+        <div class="grid-4">
+          <div class="stat-box"><div class="stat-val" id="prog-swim" style="color:var(--blue)">--</div><div class="stat-label">Total Natació</div></div>
+          <div class="stat-box"><div class="stat-val" id="prog-bike" style="color:var(--teal)">--</div><div class="stat-label">Total Ciclisme</div></div>
+          <div class="stat-box"><div class="stat-val" id="prog-run" style="color:var(--red)">--</div><div class="stat-label">Total Carrera</div></div>
+          <div class="stat-box"><div class="stat-val" id="prog-sessions" style="color:var(--purple)">0</div><div class="stat-label">Sessions</div></div>
+        </div>
+        <div class="grid-2" style="margin-top:14px">
+          <div class="stat-box"><div class="stat-val" id="prog-total-h">0h</div><div class="stat-label">Hores totals</div></div>
+          <div class="stat-box"><div class="stat-val" id="prog-strength-s" style="color:var(--purple)">0</div><div class="stat-label">Sessions força</div></div>
+        </div>
+      </div>
+      <div id="progress-history" style="display:none">
+        <div class="card">
+          <div class="card-title">Totes les sessions</div>
+          <div id="prog-history-list"></div>
+        </div>
+      </div>
+      <div id="progress-phases" style="display:none">
+        <div class="card">
+          <div class="card-title">Fases de preparació</div>
+          <div id="prog-phases-content"></div>
+        </div>
+      </div>
+      <div id="progress-body" style="display:none">
+        <div class="card" style="max-width:400px">
+          <div class="card-title">Pes i cintura</div>
+          <div class="grid-2" style="margin-bottom:14px">
+            <div class="form-group">
+              <label class="form-label">Pes (kg)</label>
+              <input class="form-input" type="number" step="0.1" id="body-weight" placeholder="72"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cintura (cm)</label>
+              <input class="form-input" type="number" step="0.5" id="body-waist" placeholder="82"/>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" onclick="saveBody()">Guardar mesures</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RENDIMENT -->
+    <div id="view-performance" class="view">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">VO₂ Max — evolució</div>
+          <div class="bar-chart" id="perf-vo2-chart" style="height:120px"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">FC Repòs — evolució</div>
+          <div class="bar-chart" id="perf-hr-chart" style="height:120px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SON -->
+    <div id="view-sleep" class="view">
+      <div class="grid-4" style="margin-bottom:16px">
+        <div class="stat-box"><div class="stat-val" id="sl-hours" style="color:var(--blue)">--</div><div class="stat-label">Hores son</div></div>
+        <div class="stat-box"><div class="stat-val" id="sl-score" style="color:var(--purple)">--</div><div class="stat-label">Puntuació</div></div>
+        <div class="stat-box"><div class="stat-val" id="sl-avg7" style="color:var(--teal)">--</div><div class="stat-label">Mitjana 7d</div></div>
+        <div class="stat-box"><div class="stat-val" id="sl-avg30" style="color:var(--orange)">--</div><div class="stat-label">Mitjana 30d</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Son — últims 30 dies</div>
+        <div class="bar-chart" id="sleep-chart" style="height:120px"></div>
+      </div>
+    </div>
+
+    <!-- COMPETICIONS -->
+    <div id="view-races" class="view">
+      <div class="grid-2">
+        <div>
+          <div id="races-list" style="margin-bottom:16px"></div>
+        </div>
+        <div class="card" style="height:fit-content">
+          <div class="card-title">Afegir competició</div>
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input class="form-input" id="race-name" placeholder="Ironman 70.3 Mallorca"/>
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Data</label>
+              <input class="form-input" type="date" id="race-date"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipus</label>
+              <select class="form-select" id="race-type">
+                <option value="ironman">Ironman</option>
+                <option value="ironman703">Ironman 70.3</option>
+                <option value="triathlon">Triatló</option>
+                <option value="running">Cursa a peu</option>
+                <option value="cycling">Ciclisme</option>
+                <option value="swimming">Natació</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Distància</label>
+              <input class="form-input" id="race-dist" placeholder="226 km"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lloc</label>
+              <input class="form-input" id="race-loc" placeholder="Mallorca"/>
+            </div>
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;margin-bottom:14px;cursor:pointer;color:var(--muted)">
+            <input type="checkbox" id="race-main" style="accent-color:var(--red)"/> Objectiu principal
+          </label>
+          <button class="btn btn-primary btn-block" onclick="addRace()">Afegir competició</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- NUTRICIÓ -->
+    <div id="view-nutrition" class="view">
+      <div class="grid-4" style="margin-bottom:16px">
+        <div class="stat-box"><div class="stat-val" id="nut-kcal" style="color:var(--orange)">--</div><div class="stat-label">kcal</div></div>
+        <div class="stat-box"><div class="stat-val" id="nut-carbs" style="color:var(--blue)">--g</div><div class="stat-label">Carbohidrats</div></div>
+        <div class="stat-box"><div class="stat-val" id="nut-prot" style="color:var(--teal)">--g</div><div class="stat-label">Proteïna</div></div>
+        <div class="stat-box"><div class="stat-val" id="nut-fat" style="color:var(--muted)">--g</div><div class="stat-label">Greixos</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Pre-entrenament</div>
+          <div id="nut-pre" style="font-size:.85rem;color:var(--muted)">--</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Post-entrenament</div>
+          <div id="nut-post" style="font-size:.85rem;color:var(--muted)">--</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="card-title">Notes</div>
+        <div id="nut-notes" style="font-size:.85rem;color:var(--muted)">--</div>
+      </div>
+    </div>
+
+    <!-- ASSISTENT IA -->
+    <div id="view-ai" class="view">
+      <div class="card">
+        <div class="card-title">Assistent IA</div>
+        <div class="ai-messages" id="ai-messages">
+          <div class="ai-msg bot">Hola! Sóc el teu entrenador Aion Athletic. Pregunta'm qualsevol cosa sobre el teu entrenament, el pla, la nutrició o el rendiment.</div>
+        </div>
+        <div class="ai-input-row">
+          <input class="ai-input" id="ai-input" placeholder="Escriu una pregunta..." onkeydown="if(event.key==='Enter')sendAI()"/>
+          <button class="btn btn-primary" onclick="sendAI()">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TELEGRAM -->
+    <div id="view-telegram" class="view">
+      <div class="card" style="max-width:500px">
+        <div class="card-title">Configuració Telegram</div>
+        <div id="tg-status" style="font-size:.85rem;color:var(--muted);margin-bottom:16px">Per activar: busca el teu bot i escriu /start</div>
+        <div class="form-group">
+          <label class="form-label">Hora notificació matinal</label>
+          <input class="form-input" type="time" id="tg-time" value="07:00"/>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="saveTelegram()">Guardar</button>
+      </div>
+    </div>
+
+    <!-- CONFIGURACIÓ -->
+    <div id="view-settings" class="view">
+      <div class="grid-2">
+        <div>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-title">Perfil</div>
+            <div class="form-group"><label class="form-label">Nom</label><input class="form-input" id="s-name" placeholder="El teu nom"/></div>
+            <div class="grid-2">
+              <div class="form-group"><label class="form-label">Pes (kg)</label><input class="form-input" type="number" step="0.1" id="s-weight" placeholder="72"/></div>
+              <div class="form-group"><label class="form-label">Cintura (cm)</label><input class="form-input" type="number" step="0.5" id="s-waist" placeholder="82"/></div>
+            </div>
+            <div class="form-group"><label class="form-label">Idioma</label>
+              <select class="form-select" id="s-lang"><option value="ca">Català</option><option value="en">English</option></select>
+            </div>
+          </div>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-title">Garmin Connect</div>
+            <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="s-garmin-user" placeholder="correu@garmin.com"/></div>
+            <div class="form-group"><label class="form-label">Contrasenya</label><input class="form-input" type="password" id="s-garmin-pass" placeholder="••••••••"/></div>
+            <button class="btn btn-secondary" style="width:100%" onclick="testGarmin()">Provar connexió Garmin</button>
+          </div>
+          <div class="card">
+            <div class="card-title">Wahoo</div>
+            <div class="form-group"><label class="form-label">Email Wahoo</label><input class="form-input" type="email" id="s-wahoo-user" placeholder="correu@wahoo.com"/></div>
+            <div class="form-group"><label class="form-label">Contrasenya Wahoo</label><input class="form-input" type="password" id="s-wahoo-pass" placeholder="••••••••"/></div>
+            <button class="btn btn-secondary" style="width:100%" onclick="testWahoo()">Provar connexió Wahoo</button>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-title">Intel·ligència Artificial</div>
+            <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px">Pots configurar les tres IA alhora. La principal és la que genera el pla.</p>
+            <div class="form-group">
+              <label class="form-label">IA Principal (pla i nutrició)</label>
+              <select class="form-select" id="s-ai-provider">
+                <option value="claude">Claude (Anthropic)</option>
+                <option value="gemini">Gemini (Google)</option>
+                <option value="openai">ChatGPT (OpenAI)</option>
+              </select>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+              <div style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Claus API</div>
+              <div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#D97706;display:inline-block"></span>Claude (Anthropic)</label><input class="form-input" type="password" id="s-claude-key" placeholder="sk-ant-..."/></div>
+              <div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#4285F4;display:inline-block"></span>Gemini (Google)</label><input class="form-input" type="password" id="s-gemini-key" placeholder="AIza..."/></div>
+              <div class="form-group"><label class="form-label" style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:#10A37F;display:inline-block"></span>ChatGPT (OpenAI)</label><input class="form-input" type="password" id="s-openai-key" placeholder="sk-..."/></div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="saveSettings()">💾 Guardar configuració</button>
+          <button class="btn btn-secondary" style="width:100%" onclick="generatePlan()">✨ Generar pla IA</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
 <div id="toast"></div>
-<div class="loading-overlay" id="loading-overlay">
-  <div class="big-spinner"></div>
-  <div id="loading-text">Carregant...</div>
-</div>
+<div class="overlay" id="overlay"><div class="big-spin"></div><div id="overlay-text">Carregant...</div></div>
 
 <script>
-// =======================================================
-// CONFIGURACIO — CANVIA AQUESTS DOS VALORS DESPRES
-// DEL PAS 3 DE LA GUIA
-// =======================================================
+// ==============================================
+// CONFIGURACIÓ — CANVIA AQUESTS VALORS
+// ==============================================
 const BACKEND = 'https://aion-backend.aionalrob.workers.dev';
 const SECRET  = 'AionAth2025xK9mSecure!';
-// =======================================================
+// ==============================================
 
+// ESTAT
+let planWeekOffset = 0;
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth();
-let sessionDates = new Set();
+let sessionDates = {};
+let availData = [];
+let progressTab = 'volume';
+
+const TITLES = {dashboard:'Dashboard',forma:'Estat de forma',plan:'Pla setmanal',calendar:'Calendari',register:'Registrar sessió',availability:'Disponibilitat',progress:'Progrés',performance:'Rendiment',sleep:'Son',races:'Competicions',nutrition:'Nutrició',ai:'Assistent IA',telegram:'Telegram',settings:'Configuració'};
+const SPORT_EMOJI = {swimming:'🏊',cycling:'🚴',running:'🏃',strength:'💪',stretching:'🧘',triathlon:'🏅'};
+const SPORT_NAME = {swimming:'Natació',cycling:'Ciclisme',running:'Carrera',strength:'Força',stretching:'Estiraments',triathlon:'Triatló'};
+const SPORT_COLOR = {swimming:'var(--blue)',cycling:'var(--teal)',running:'var(--red)',strength:'var(--purple)',stretching:'var(--orange)',triathlon:'var(--red2)'};
+const DAYS_CA = ['Diumenge','Dilluns','Dimarts','Dimecres','Dijous','Divendres','Dissabte'];
+const DAYS_SHORT = ['Dg','Dl','Dm','Dc','Dj','Dv','Ds'];
 
 // NAV
-function showView(name, el) {
+function nav(id, el) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
   if(el) el.classList.add('active');
-  if(name==='home') loadDashboard();
-  if(name==='plan') loadPlan();
-  if(name==='history'){loadSessions();renderCalendar();}
-  if(name==='performance'){loadCharts();loadNutritionDetail();}
-  if(name==='settings') loadSettings();
+  document.getElementById('topbar-title').textContent = TITLES[id]||id;
+  document.getElementById('topbar-action-btn').style.display='none';
+  if(id==='dashboard') loadDashboard();
+  if(id==='forma') loadForma();
+  if(id==='plan') loadPlan();
+  if(id==='calendar') {loadSessions();renderCalendar();}
+  if(id==='progress') loadProgress();
+  if(id==='performance') loadPerformance();
+  if(id==='sleep') loadSleep();
+  if(id==='races') loadRaces();
+  if(id==='nutrition') loadNutrition();
+  if(id==='settings') loadSettings();
+  if(id==='availability') loadAvailability();
+  if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
 }
 
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+
 // API
-async function api(path, method='GET', body=null) {
+async function api(path,method='GET',body=null){
   const opts={method,headers:{'Authorization':'Bearer '+SECRET,'Content-Type':'application/json'}};
   if(body) opts.body=JSON.stringify(body);
   const r=await fetch(BACKEND+path,opts);
@@ -431,168 +765,486 @@ async function api(path, method='GET', body=null) {
   return r.json();
 }
 
-// TOAST
-function toast(msg,ms=2800){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),ms);
-}
-function showLoading(txt='Carregant...'){
-  document.getElementById('loading-text').textContent=txt;
-  document.getElementById('loading-overlay').classList.add('show');
-}
-function hideLoading(){document.getElementById('loading-overlay').classList.remove('show');}
-
-const SPORT={'running':'&#x1F3C3;','cycling':'&#x1F6B4;','swimming':'&#x1F3CA;','strength':'&#x1F4AA;','stretching':'&#x1F9D8;','triathlon':'&#x1F3C5;'};
-const SPORT_NAME={'running':'Cursa a peu','cycling':'Ciclisme','swimming':'Natacio','strength':'Forca','stretching':'Estiraments','triathlon':'Triatlo'};
+// TOAST / OVERLAY
+function toast(msg,ms=2800){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms);}
+function showOverlay(txt='Carregant...'){document.getElementById('overlay-text').textContent=txt;document.getElementById('overlay').classList.add('show');}
+function hideOverlay(){document.getElementById('overlay').classList.remove('show');}
 
 // DASHBOARD
 async function loadDashboard(){
   try{
-    const [metrics,plan,races,nut]=await Promise.allSettled([api('/metrics/today'),api('/plan/today'),api('/races'),api('/nutrition/today')]);
-    if(metrics.status==='fulfilled'){
-      const m=metrics.value;
-      document.getElementById('m-vo2').textContent=m.vo2max?m.vo2max.toFixed(1):'--';
-      document.getElementById('m-hr').textContent=m.resting_hr?m.resting_hr+' bpm':'--';
-      document.getElementById('m-sleep').textContent=m.sleep_hours?m.sleep_hours.toFixed(1)+'h':'--';
-      document.getElementById('m-steps').textContent=m.steps?m.steps.toLocaleString('ca'):'--';
+    const [m,plan,races,nut]=await Promise.allSettled([api('/metrics/today'),api('/plan/today'),api('/races'),api('/nutrition/today')]);
+    if(m.status==='fulfilled'){
+      const x=m.value;
+      document.getElementById('d-vo2').textContent=x.vo2max?x.vo2max.toFixed(1):'--';
+      document.getElementById('d-hr').textContent=x.resting_hr?x.resting_hr+' bpm':'--';
+      document.getElementById('d-sleep').textContent=x.sleep_hours?x.sleep_hours.toFixed(1)+'h':'--';
+      document.getElementById('d-steps').textContent=x.steps?x.steps.toLocaleString('ca'):'--';
     }
-    if(races.status==='fulfilled'&&races.value.length>0){
-      const r=races.value.find(x=>x.is_main_goal)||races.value[0];
-      const days=r.days_left||0;
-      document.getElementById('countdown-card').style.display='block';
-      document.getElementById('countdown-content').innerHTML=`<div class="countdown-num">${days}</div><div class="countdown-sub">${days===1?'dia':'dies'} per a <strong>${r.name}</strong></div><div class="prog-bar"><div class="prog-fill" style="width:${Math.max(2,Math.min(98,(1-days/365)*100))}%"></div></div>`;
-    }
-    const tp=document.getElementById('today-plan');
-    if(plan.status==='fulfilled'&&plan.value.length>0){
-      tp.innerHTML=plan.value.map(s=>sessionCard(s,true)).join('');
+    // Pla avui
+    const tp=document.getElementById('dash-today');
+    if(plan.status==='fulfilled'&&plan.value.length){
+      tp.innerHTML=plan.value.map(s=>`<div class="session-row">
+        <div class="session-icon si-${s.sport==='swimming'?'swim':s.sport==='cycling'?'bike':s.sport==='running'?'run':s.sport==='strength'?'strength':'stretch'}">${SPORT_EMOJI[s.sport]||'🏋'}</div>
+        <div class="session-info"><div class="session-name">${s.description||SPORT_NAME[s.sport]||s.sport}</div>
+        <div class="session-meta">${s.duration_min?s.duration_min+'min':''}${s.zones?' · '+s.zones:''}</div></div>
+        ${s.completed?'<span style="color:var(--teal);font-size:1.1rem">✓</span>':''}
+      </div>`).join('');
     } else {
-      tp.innerHTML='<div style="color:var(--muted);font-size:.85rem;padding:8px 0">&#x1F60C; Avui es dia de descans</div>';
+      tp.innerHTML='<div style="color:var(--muted);font-size:.85rem;padding:8px 0">😌 Dia de descans</div>';
     }
+    // Volum setmana
+    await loadWeekVolume();
+    // Races
+    if(races.status==='fulfilled') renderDashRaces(races.value);
+    // Sidebar races
+    if(races.status==='fulfilled') renderSidebarRaces(races.value);
+    // Nutrició
     if(nut.status==='fulfilled'){
       const n=nut.value;
-      document.getElementById('nutrition-summary').innerHTML=`<div style="display:flex;gap:16px;margin-bottom:8px"><div><div style="font-size:1.3rem;font-weight:800;color:var(--orange)">${n.calories_target||'--'}</div><div style="font-size:.65rem;color:var(--muted)">kcal</div></div><div><div style="font-size:1.3rem;font-weight:800;color:var(--teal)">${n.hydration_ml?(n.hydration_ml/1000).toFixed(1)+'L':'--'}</div><div style="font-size:.65rem;color:var(--muted)">aigua</div></div></div>${n.pre_workout?`<div style="font-size:.78rem;color:var(--muted)">Pre: ${n.pre_workout}</div>`:''}`;
+      document.getElementById('dash-week-volume').innerHTML += `<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+        <div class="card-title">Nutrició avui</div>
+        <div style="display:flex;gap:16px">
+          <div><div style="font-size:1.2rem;font-weight:800;color:var(--orange)">${n.calories_target||'--'}</div><div style="font-size:.65rem;color:var(--muted)">kcal</div></div>
+          <div><div style="font-size:1.2rem;font-weight:800;color:var(--teal)">${n.hydration_ml?(n.hydration_ml/1000).toFixed(1)+'L':'--'}</div><div style="font-size:.65rem;color:var(--muted)">hidratació</div></div>
+        </div>
+      </div>`;
     }
   }catch(e){console.error(e);}
 }
 
-function sessionCard(s,check=false){
-  const done=s.completed===1;
-  return `<div class="session-item"><div class="session-emoji">${SPORT[s.sport]||'&#x1F3CB;'}</div><div class="session-info"><div class="session-name">${s.description||SPORT_NAME[s.sport]||s.sport}</div><div class="session-meta">${s.duration_min?s.duration_min+'min':''}${s.zones?' · '+s.zones:''}</div></div>${s.session_type?`<div class="session-zone">${s.session_type}</div>`:''}${check?`<button class="check-btn ${done?'done':''}" onclick="completeSession(${s.id},this)">${done?'&#x2713;':'&#x25CB;'}</button>`:''}</div>`;
+async function loadWeekVolume(){
+  try{
+    const today=new Date();
+    const monday=new Date(today);
+    monday.setDate(today.getDate()-((today.getDay()+6)%7));
+    const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);
+    const sessions=await api('/sessions?limit=100');
+    const week=sessions.filter(s=>s.date>=monday.toISOString().split('T')[0]&&s.date<=sunday.toISOString().split('T')[0]);
+    const byType={swimming:0,cycling:0,running:0,strength:0,stretching:0};
+    let totalMin=0;
+    for(const s of week){
+      if(byType[s.sport]!==undefined) byType[s.sport]+=(s.duration_min||0);
+      totalMin+=(s.duration_min||0);
+    }
+    const el=document.getElementById('dash-week-volume');
+    const totalH=Math.floor(totalMin/60);
+    const totalM=totalMin%60;
+    el.innerHTML=`<div style="font-size:1.8rem;font-weight:900;color:var(--text);margin-bottom:8px">${totalH}h ${totalM}min</div>
+    <div style="font-size:.72rem;color:var(--muted);margin-bottom:10px">${week.length} sessions aquesta setmana</div>
+    ${Object.entries(byType).filter(([,v])=>v>0).map(([k,v])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+      <div style="width:8px;height:8px;border-radius:50%;background:${SPORT_COLOR[k]};flex-shrink:0"></div>
+      <div style="font-size:.78rem;color:var(--muted);flex:1">${SPORT_NAME[k]}</div>
+      <div style="font-size:.78rem;font-weight:700">${Math.floor(v/60)}h${v%60?v%60+'min':''}</div>
+    </div>`).join('')}`;
+  }catch(e){}
 }
 
-async function completeSession(id,btn){
-  try{await api('/plan/complete','POST',{id});btn.classList.add('done');btn.innerHTML='&#x2713;';toast('Sessio completada!');}
-  catch(e){toast('Error guardant');}
+function renderDashRaces(races){
+  const el=document.getElementById('dash-races');
+  if(!races.length){el.innerHTML='<div style="color:var(--muted);font-size:.85rem">Cap competició. Afegeix-ne a l\'apartat Competicions.</div>';return;}
+  el.innerHTML=races.slice(0,4).map(r=>{
+    const d=r.days_left||0;
+    const w=Math.floor(d/7);
+    const pct=Math.max(2,Math.min(98,(1-d/365)*100));
+    return `<div style="display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="min-width:52px;text-align:center">
+        <div style="font-size:1.4rem;font-weight:900;color:var(--red);line-height:1">${w}</div>
+        <div style="font-size:.6rem;color:var(--muted)">setmanes</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:.88rem;font-weight:600">${r.name}</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${r.date}${r.location?' · '+r.location:''}</div>
+        <div style="height:3px;background:var(--border);border-radius:2px;margin-top:6px"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:2px"></div></div>
+      </div>
+      <div style="text-align:right"><div style="font-size:.72rem;color:var(--muted)">${d} dies</div></div>
+    </div>`;
+  }).join('');
 }
 
-async function syncAll(){
-  showLoading('Sincronitzant Garmin...');
-  try{const r=await api('/garmin/sync','POST');hideLoading();if(r.ok){toast('Garmin sincronitzat!');loadDashboard();}else toast('Error: '+(r.error||'desconegut'));}
-  catch(e){hideLoading();toast('Error de connexio');}
+function renderSidebarRaces(races){
+  const el=document.getElementById('sidebar-races');
+  if(!races.length){el.innerHTML='';return;}
+  el.innerHTML=`<div class="sidebar-races-title">Pròximes curses</div>`+
+    races.slice(0,3).map(r=>{
+      const w=Math.floor((r.days_left||0)/7);
+      const pct=Math.max(2,Math.min(98,(1-(r.days_left||0)/365)*100));
+      return `<div class="sidebar-race-item">
+        <div class="sidebar-race-name">${r.name}</div>
+        <div class="sidebar-race-days">${w}<span style="font-size:.65rem;font-weight:400;color:var(--muted)"> set.</span></div>
+        <div class="sidebar-race-bar"><div class="sidebar-race-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    }).join('');
 }
 
-// PLA
+// ESTAT DE FORMA
+async function loadForma(){
+  try{
+    const [today,hist]=await Promise.allSettled([api('/metrics/today'),api('/metrics?days=30')]);
+    if(today.status==='fulfilled'){
+      const m=today.value;
+      document.getElementById('f-vo2').textContent=m.vo2max?m.vo2max.toFixed(1):'--';
+      document.getElementById('f-hr').textContent=m.resting_hr?m.resting_hr+' bpm':'--';
+      document.getElementById('f-sleep').textContent=m.sleep_hours?m.sleep_hours.toFixed(1)+'h':'--';
+      document.getElementById('f-sleep-score').textContent=m.sleep_score?m.sleep_score+'/100':'';
+      document.getElementById('f-sleep-score').className='stat-delta '+(m.sleep_score>=75?'delta-up':'delta-down');
+      document.getElementById('f-steps').textContent=m.steps?m.steps.toLocaleString('ca'):'--';
+    }
+    if(hist.status==='fulfilled'){
+      const data=[...hist.value].reverse();
+      renderBarChartData('forma-vo2-chart',data.map(d=>d.vo2max||0),'var(--teal)',40,65);
+      renderBarChartData('forma-hr-chart',data.map(d=>d.resting_hr||0),'var(--red)',45,75);
+    }
+  }catch(e){console.error(e);}
+}
+
+// PLA SETMANAL
 async function loadPlan(){
   try{
     const sessions=await api('/plan');
-    const el=document.getElementById('plan-list');
-    if(!sessions.length){el.innerHTML='<div style="color:var(--muted);font-size:.85rem;text-align:center;padding:24px">Cap pla generat.<br><br>Prem <strong>Generar IA</strong> per crear el teu pla personalitzat.</div>';return;}
-    const byDay={};
-    for(const s of sessions){if(!byDay[s.day_date])byDay[s.day_date]=[];byDay[s.day_date].push(s);}
-    const today=new Date().toISOString().split('T')[0];
-    let html='';
-    for(const date of Object.keys(byDay).sort()){
-      const isToday=date===today;
-      const d=new Date(date+'T12:00:00');
-      const label=d.toLocaleDateString('ca-ES',{weekday:'long',day:'numeric',month:'short'});
-      html+=`<div class="plan-day"><div class="plan-day-header ${isToday?'today-header':''}">${isToday?'&#x1F534; ':''}${label.charAt(0).toUpperCase()+label.slice(1)}${byDay[date][0].week_number?' S'+byDay[date][0].week_number:''}</div>${byDay[date].map(s=>sessionCard(s,true)).join('')}</div>`;
-    }
-    el.innerHTML=html;
-  }catch(e){document.getElementById('plan-list').innerHTML='<div style="color:var(--muted)">Error carregant el pla</div>';}
+    renderWeekPlan(sessions);
+  }catch(e){
+    document.getElementById('plan-days').innerHTML='<div style="color:var(--muted);grid-column:span 7;text-align:center;padding:24px">Cap pla generat. Ves a Configuració i prem "Generar pla IA".</div>';
+  }
 }
 
-async function generatePlan(){
-  showLoading('Generant pla amb IA...\nAixo pot trigar 20-30 seg.');
-  try{const r=await api('/plan/generate','POST');hideLoading();if(r.ok){toast('Pla generat! '+r.total+' sessions');loadPlan();}else toast('Error: '+(r.error||'desconegut'));}
-  catch(e){hideLoading();toast('Error de connexio');}
+function renderWeekPlan(sessions){
+  const today=new Date();
+  const monday=new Date(today);
+  monday.setDate(today.getDate()-((today.getDay()+6)%7)+(planWeekOffset*7));
+  const days=[];
+  for(let i=0;i<7;i++){
+    const d=new Date(monday);d.setDate(monday.getDate()+i);
+    days.push(d.toISOString().split('T')[0]);
+  }
+  const mondayLabel=monday.toLocaleDateString('ca-ES',{day:'numeric',month:'short'});
+  const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);
+  const sundayLabel=sunday.toLocaleDateString('ca-ES',{day:'numeric',month:'short'});
+  document.getElementById('plan-week-label').textContent=`${mondayLabel} — ${sundayLabel}`;
+  const weekSessions=sessions.filter(s=>days.includes(s.day_date));
+  const weekNum=weekSessions[0]?.week_number;
+  document.getElementById('plan-week-sub').innerHTML=weekNum?`Setmana ${weekNum} <span class="week-phase-badge phase-base">BASE</span>`:'';
+  // Objectiu
+  const objectives={'-1':'Setmana de curs. Recuperació activa. Baixa la càrrega un 30%.','-2':'Setmana pic de volum. Màxima càrrega de la fase.','-3':'Consolidació. Manté el volum de la setmana anterior.','-4':'Construcció. Augmenta progressivament la càrrega.'};
+  document.getElementById('plan-objective').innerHTML=`<strong>Objectiu</strong>${objectives[String(weekNum)]||'Setmana d\'entrenament. Segueix el pla i escolta el cos.'}`;
+  // Dies
+  const todayStr=new Date().toISOString().split('T')[0];
+  const daysRow=document.getElementById('plan-days');
+  const dayNames=['Dl','Dm','Dc','Dj','Dv','Ds','Dg'];
+  daysRow.innerHTML=days.map((date,i)=>{
+    const s=weekSessions.find(x=>x.day_date===date);
+    const isToday=date===todayStr;
+    if(!s) return `<div class="day-card rest ${isToday?'today':''}"><div class="day-label">${dayNames[i]}</div><div style="font-size:1.2rem;margin:auto;color:var(--border)">—</div></div>`;
+    const zoneClass=s.zones?('zone-'+s.zones.toLowerCase().replace(/\s.*/,'').replace('zona','z')):'';
+    return `<div class="day-card ${isToday?'today':''} ${s.completed?'done':''}" onclick="completeSession(${s.id},this)">
+      <div class="day-label">${dayNames[i]}</div>
+      <div class="day-sport-icon">${SPORT_EMOJI[s.sport]||'🏋'}</div>
+      <div class="day-sport-name" style="color:${SPORT_COLOR[s.sport]||'var(--text)'}">${SPORT_NAME[s.sport]||s.sport}</div>
+      <div class="day-duration">${s.duration_min?s.duration_min+'min':''}</div>
+      ${s.zones?`<div class="day-zone ${zoneClass}">${s.zones}</div>`:''}
+      ${s.completed?'<div style="color:var(--teal);font-size:.7rem;margin-top:2px">✓ Fet</div>':''}
+    </div>`;
+  }).join('');
+  // Totals
+  let totalMin=0;const bySport={};
+  for(const s of weekSessions){totalMin+=(s.duration_min||0);bySport[s.sport]=(bySport[s.sport]||0)+(s.duration_min||0);}
+  const h=Math.floor(totalMin/60),m=totalMin%60;
+  document.getElementById('plan-totals').innerHTML=`<div class="week-total-item"><span style="font-size:1rem">⏱</span><span class="week-total-val">${h}h ${m}min</span><span class="week-total-label">total</span></div>`+
+    Object.entries(bySport).map(([k,v])=>`<div class="week-total-item"><div class="week-total-dot" style="background:${SPORT_COLOR[k]}"></div><span class="week-total-val">${Math.floor(v/60)}h${v%60?v%60+'m':''}</span><span class="week-total-label">${SPORT_NAME[k]}</span></div>`).join('');
 }
 
-// HISTORIAL
-async function loadSessions(){
-  try{
-    const s=await api('/sessions');
-    sessionDates=new Set(s.map(x=>x.date));
-    const el=document.getElementById('sessions-list');
-    if(!s.length){el.innerHTML='<div style="color:var(--muted);font-size:.85rem">Cap sessio registrada</div>';return;}
-    el.innerHTML=s.slice(0,25).map(x=>`<div class="session-item"><div class="session-emoji">${SPORT[x.sport]||'&#x1F3CB;'}</div><div class="session-info"><div class="session-name">${SPORT_NAME[x.sport]||x.sport}</div><div class="session-meta">${x.date}${x.duration_min?' · '+x.duration_min+'min':''}${x.distance_km?' · '+x.distance_km.toFixed(1)+'km':''}${x.avg_hr?' · &#x2764;'+x.avg_hr:''}${x.source==='garmin'?' · &#x1F4E1;':''}</div></div></div>`).join('');
-    renderCalendar();
-  }catch(e){console.error(e);}
-}
+function changeWeek(dir){planWeekOffset+=dir;loadPlan();}
 
-document.addEventListener('DOMContentLoaded',()=>{document.getElementById('new-session-date').value=new Date().toISOString().split('T')[0];});
-
-async function addSession(){
-  const date=document.getElementById('new-session-date').value;
-  const sport=document.getElementById('new-session-sport').value;
-  const dur=parseInt(document.getElementById('new-session-dur').value)||null;
-  const dist=parseFloat(document.getElementById('new-session-dist').value)||null;
-  const notes=document.getElementById('new-session-notes').value||null;
-  if(!date||!sport){toast('Omple la data i l\'esport');return;}
-  try{await api('/sessions','POST',{date,sport,duration_min:dur,distance_km:dist,notes,source:'manual'});toast('Sessio guardada!');document.getElementById('new-session-dur').value='';document.getElementById('new-session-dist').value='';document.getElementById('new-session-notes').value='';loadSessions();}
-  catch(e){toast('Error guardant sessio');}
+async function completeSession(id,el){
+  try{await api('/plan/complete','POST',{id});el.classList.add('done');toast('✓ Sessió completada!');}
+  catch(e){toast('Error');}
 }
 
 // CALENDARI
+async function loadSessions(){
+  try{
+    const s=await api('/sessions?limit=200');
+    sessionDates={};
+    for(const x of s) sessionDates[x.date]=x.sport;
+    const el=document.getElementById('cal-sessions');
+    el.innerHTML=s.slice(0,20).map(x=>`<div class="session-row">
+      <div class="session-icon si-${x.sport==='swimming'?'swim':x.sport==='cycling'?'bike':x.sport==='running'?'run':x.sport==='strength'?'strength':'stretch'}">${SPORT_EMOJI[x.sport]||'🏋'}</div>
+      <div class="session-info">
+        <div class="session-name">${SPORT_NAME[x.sport]||x.sport}</div>
+        <div class="session-meta">${x.date}${x.duration_min?' · '+x.duration_min+'min':''}${x.distance_km?' · '+x.distance_km.toFixed(1)+'km':''}</div>
+      </div>
+      <span class="session-source src-${x.source||'manual'}">${x.source||'manual'}</span>
+    </div>`).join('');
+    renderCalendar();
+  }catch(e){}
+}
+
 function renderCalendar(){
-  const label=new Date(calYear,calMonth).toLocaleDateString('ca-ES',{month:'long',year:'numeric'});
-  document.getElementById('cal-month-label').textContent=label.charAt(0).toUpperCase()+label.slice(1);
+  const lbl=new Date(calYear,calMonth).toLocaleDateString('ca-ES',{month:'long',year:'numeric'});
+  document.getElementById('cal-month-label').textContent=lbl.charAt(0).toUpperCase()+lbl.slice(1);
   const grid=document.getElementById('cal-grid');
-  const days=['Dl','Dm','Dc','Dj','Dv','Ds','Dg'];
-  let html=days.map(d=>`<div class="cal-header">${d}</div>`).join('');
-  let startDow=new Date(calYear,calMonth,1).getDay();
-  startDow=startDow===0?6:startDow-1;
-  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const heads=['Dl','Dm','Dc','Dj','Dv','Ds','Dg'];
+  let html=heads.map(d=>`<div class="cal-head">${d}</div>`).join('');
+  let dow=new Date(calYear,calMonth,1).getDay();
+  dow=dow===0?6:dow-1;
+  const dim=new Date(calYear,calMonth+1,0).getDate();
   const today=new Date();
-  for(let i=0;i<startDow;i++) html+='<div class="cal-day other-month"></div>';
-  for(let d=1;d<=daysInMonth;d++){
+  for(let i=0;i<dow;i++) html+='<div class="cal-day other"></div>';
+  for(let d=1;d<=dim;d++){
     const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const isToday=d===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear();
-    const has=sessionDates.has(ds);
-    html+=`<div class="cal-day ${isToday?'today':has?'has-session':''}">${d}</div>`;
+    const sport=sessionDates[ds];
+    const cls=isToday?'today-cal':sport?`has-s ${sport==='swimming'?'swim':sport==='cycling'?'bike':sport==='running'?'run':sport==='strength'?'strength':''}`:'' ;
+    html+=`<div class="cal-day ${cls}">${d}${sport&&!isToday?'<div class="cal-day-dot"></div>':''}</div>`;
   }
   grid.innerHTML=html;
 }
-function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function changeMonth(d){calMonth+=d;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+
+// REGISTRAR
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('reg-date').value=new Date().toISOString().split('T')[0];});
+async function registerSession(){
+  const date=document.getElementById('reg-date').value;
+  const sport=document.getElementById('reg-sport').value;
+  if(!date||!sport){toast('Omple data i esport');return;}
+  const dur=parseInt(document.getElementById('reg-dur').value)||null;
+  const dist=parseFloat(document.getElementById('reg-dist').value)||null;
+  const hr=parseInt(document.getElementById('reg-hr').value)||null;
+  const notes=document.getElementById('reg-notes').value||null;
+  const source=document.getElementById('reg-source').value;
+  try{
+    await api('/sessions','POST',{date,sport,duration_min:dur,distance_km:dist,avg_hr:hr,notes,source});
+    toast('✅ Sessió guardada!');
+    ['reg-dur','reg-dist','reg-hr','reg-notes'].forEach(id=>document.getElementById(id).value='');
+  }catch(e){toast('Error guardant');}
+}
+
+// DISPONIBILITAT
+const SPORTS_LIST=[{k:'swimming',n:'Natació',e:'🏊'},{k:'cycling',n:'Ciclisme',e:'🚴'},{k:'running',n:'Carrera',e:'🏃'},{k:'strength',n:'Força',e:'💪'}];
+
+async function loadAvailability(){
+  try{
+    const avail=await api('/availability');
+    availData=avail;
+    renderAvailGrid(avail);
+    const blocked=await api('/blocked');
+    renderExceptions(blocked);
+  }catch(e){renderAvailGrid([]);}
+}
+
+function renderAvailGrid(avail){
+  const dows=[1,2,3,4,5,6,0];
+  const grid=document.getElementById('avail-grid');
+  grid.innerHTML=dows.map((dow,i)=>{
+    const ex=avail.find(a=>a.day_of_week===dow)||{day_of_week:dow,available:1,max_duration_min:90,sports_config:'{}'};
+    let sc={};try{sc=JSON.parse(ex.sports_config||'{}');}catch(e){}
+    return `<div class="avail-day-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div class="avail-day-name">${['Dg','Dl','Dm','Dc','Dj','Dv','Ds'][dow]}</div>
+        <button class="avail-toggle ${ex.available?'on':'off'}" id="avail-tog-${i}" onclick="toggleAvailDay(${i},this)"></button>
+      </div>
+      ${SPORTS_LIST.map(s=>`<div class="avail-sport-row">
+        <div class="avail-sport-name">${s.e} ${s.n}</div>
+        <input class="avail-dur-input" type="number" id="avail-${i}-${s.k}" value="${sc[s.k]||0}" min="0" max="360" step="15" placeholder="min"/>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function toggleAvailDay(i,btn){btn.classList.toggle('on');btn.classList.toggle('off');}
+
+async function saveAvailability(){
+  const dows=[1,2,3,4,5,6,0];
+  const items=dows.map((dow,i)=>{
+    const tog=document.getElementById('avail-tog-'+i);
+    const sc={};
+    SPORTS_LIST.forEach(s=>{const v=parseInt(document.getElementById(`avail-${i}-${s.k}`)?.value)||0;if(v>0)sc[s.k]=v;});
+    return{day_of_week:dow,available:tog?.classList.contains('on')?1:0,sports_config:JSON.stringify(sc),max_duration_min:Object.values(sc).reduce((a,b)=>a+b,0)||90};
+  });
+  try{await api('/availability','POST',items);toast('✅ Disponibilitat guardada!');}
+  catch(e){toast('Error guardant');}
+}
+
+function renderExceptions(blocked){
+  const el=document.getElementById('exceptions-list');
+  if(!blocked.length){el.innerHTML='<div style="color:var(--muted);font-size:.82rem">Sense excepcions definides.</div>';return;}
+  el.innerHTML=blocked.map(b=>`<div class="exception-card">
+    <div><div style="font-size:.85rem;font-weight:600">${b.date}</div><div style="font-size:.72rem;color:var(--muted)">${b.reason||'Dia blocat'}</div></div>
+    <button class="btn btn-secondary btn-sm" onclick="deleteBlock('${b.date}')">✕</button>
+  </div>`).join('');
+}
+
+function showExceptionForm(){document.getElementById('exception-form').style.display='block';}
+function hideExceptionForm(){document.getElementById('exception-form').style.display='none';}
+
+async function saveException(){
+  const date=document.getElementById('exc-date').value;
+  if(!date){toast('Selecciona una data');return;}
+  try{await api('/blocked','POST',{date,reason:'Dia blocat'});toast('Dia blocat!');hideExceptionForm();loadAvailability();}
+  catch(e){toast('Error');}
+}
+async function deleteBlock(date){
+  try{await api('/blocked/delete','POST',{date});toast('Eliminat');loadAvailability();}catch(e){toast('Error');}
+}
+
+// PROGRÉS
+async function loadProgress(){
+  try{
+    const sessions=await api('/sessions?limit=500');
+    // Per esport
+    const totals={swimming:0,cycling:0,running:0,strength:0,stretching:0};
+    let totalMin=0,strengthCount=0;
+    for(const s of sessions){
+      if(totals[s.sport]!==undefined) totals[s.sport]+=(s.duration_min||0);
+      totalMin+=(s.duration_min||0);
+      if(s.sport==='strength') strengthCount++;
+    }
+    const fmt=m=>m>=60?Math.floor(m/60)+'h'+(m%60?m%60+'m':''):m+'min';
+    document.getElementById('prog-swim').textContent=totals.swimming?fmt(totals.swimming):'--';
+    document.getElementById('prog-bike').textContent=totals.cycling?fmt(totals.cycling):'--';
+    document.getElementById('prog-run').textContent=totals.running?fmt(totals.running):'--';
+    document.getElementById('prog-sessions').textContent=sessions.length;
+    document.getElementById('prog-total-h').textContent=totalMin?Math.floor(totalMin/60)+'h':'0h';
+    document.getElementById('prog-strength-s').textContent=strengthCount;
+    // Gràfica per setmanes
+    renderWeeklyChart(sessions);
+    // Historial
+    document.getElementById('prog-history-list').innerHTML=sessions.slice(0,30).map(s=>`<div class="session-row">
+      <div class="session-icon si-${s.sport==='swimming'?'swim':s.sport==='cycling'?'bike':s.sport==='running'?'run':s.sport==='strength'?'strength':'stretch'}">${SPORT_EMOJI[s.sport]||'🏋'}</div>
+      <div class="session-info"><div class="session-name">${SPORT_NAME[s.sport]||s.sport}</div>
+      <div class="session-meta">${s.date}${s.duration_min?' · '+s.duration_min+'min':''}${s.distance_km?' · '+s.distance_km.toFixed(1)+'km':''}${s.avg_hr?' · ❤️'+s.avg_hr:''}</div></div>
+      <span class="session-source src-${s.source||'manual'}">${s.source||'manual'}</span>
+    </div>`).join('');
+  }catch(e){console.error(e);}
+}
+
+function renderWeeklyChart(sessions){
+  const weeks={};
+  for(const s of sessions){
+    const d=new Date(s.date+'T12:00:00');
+    const mon=new Date(d);mon.setDate(d.getDate()-((d.getDay()+6)%7));
+    const key=mon.toISOString().split('T')[0];
+    if(!weeks[key]) weeks[key]={swimming:0,cycling:0,running:0,strength:0};
+    if(weeks[key][s.sport]!==undefined) weeks[key][s.sport]+=(s.duration_min||0);
+  }
+  const sorted=Object.keys(weeks).sort().slice(-8);
+  const colors={swimming:'var(--blue)',cycling:'var(--teal)',running:'var(--red)',strength:'var(--purple)'};
+  const chart=document.getElementById('prog-sport-chart');
+  const labels=document.getElementById('prog-sport-labels');
+  if(!sorted.length){chart.innerHTML='<div style="color:var(--muted);font-size:.8rem;margin:auto">Sense dades</div>';return;}
+  const maxVal=Math.max(...sorted.map(k=>Object.values(weeks[k]).reduce((a,b)=>a+b,0)))||1;
+  chart.innerHTML=sorted.map(k=>{
+    const total=Object.values(weeks[k]).reduce((a,b)=>a+b,0);
+    const pct=Math.max(3,(total/maxVal)*100);
+    const label=new Date(k+'T12:00:00').toLocaleDateString('ca-ES',{day:'numeric',month:'short'});
+    return`<div class="bar-wrap">
+      ${Object.entries(weeks[k]).filter(([,v])=>v>0).map(([sp,v])=>`<div class="bar" style="height:${Math.max(2,(v/maxVal)*100)}%;background:${colors[sp]};margin-bottom:1px"></div>`).join('')}
+      <div class="bar-label">${label.slice(0,5)}</div>
+    </div>`;
+  }).join('');
+  labels.innerHTML=Object.entries(colors).map(([k,c])=>`<div style="display:flex;align-items:center;gap:4px;font-size:.65rem;color:var(--muted)"><div style="width:8px;height:8px;border-radius:2px;background:${c}"></div>${SPORT_NAME[k]}</div>`).join('');
+}
+
+function switchProgressTab(tab,el){
+  progressTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  ['volume','history','phases','body'].forEach(t=>{
+    const el2=document.getElementById('progress-'+t);
+    if(el2) el2.style.display=t===tab?'block':'none';
+  });
+}
 
 // RENDIMENT
-async function loadCharts(){
+async function loadPerformance(){
   try{
-    const metrics=await api('/metrics?days=30');
-    const rev=[...metrics].reverse();
-    renderChart('vo2-chart','vo2-chart-labels',rev.map(m=>m.vo2max||0),40,65,'#1ABC9C',rev);
-    renderChart('sleep-chart','sleep-chart-labels',rev.map(m=>m.sleep_hours||0),0,10,'#5b8ed6',rev);
+    const hist=await api('/metrics?days=60');
+    const data=[...hist].reverse();
+    renderBarChartData('perf-vo2-chart',data.map(d=>d.vo2max||0),'var(--teal)',40,65);
+    renderBarChartData('perf-hr-chart',data.map(d=>d.resting_hr||0),'var(--red)',45,75);
   }catch(e){}
 }
-function renderChart(cid,lid,data,min,max,color,all){
-  const c=document.getElementById(cid);const l=document.getElementById(lid);
-  if(!data.length){c.innerHTML='<div style="color:var(--muted);font-size:.8rem">Sense dades</div>';return;}
-  const range=max-min||1;
-  c.innerHTML=data.map((v,i)=>`<div class="chart-bar" style="height:${v?Math.max(4,((v-min)/range)*100):3}%;background:${v?color:'var(--border)'}" title="${all[i]?.date}: ${v||'--'}"></div>`).join('');
-  l.innerHTML=data.map((_,i)=>`<div class="chart-label">${i%Math.ceil(data.length/4)===0?all[i]?.date.slice(5):''}</div>`).join('');
+
+// SON
+async function loadSleep(){
+  try{
+    const [today,hist]=await Promise.allSettled([api('/metrics/today'),api('/metrics?days=30')]);
+    if(today.status==='fulfilled'){
+      const m=today.value;
+      document.getElementById('sl-hours').textContent=m.sleep_hours?m.sleep_hours.toFixed(1)+'h':'--';
+      document.getElementById('sl-score').textContent=m.sleep_score?m.sleep_score+'/100':'--';
+    }
+    if(hist.status==='fulfilled'){
+      const data=[...hist.value].reverse();
+      const h7=data.slice(-7).filter(d=>d.sleep_hours).map(d=>d.sleep_hours);
+      const h30=data.filter(d=>d.sleep_hours).map(d=>d.sleep_hours);
+      document.getElementById('sl-avg7').textContent=h7.length?(h7.reduce((a,b)=>a+b,0)/h7.length).toFixed(1)+'h':'--';
+      document.getElementById('sl-avg30').textContent=h30.length?(h30.reduce((a,b)=>a+b,0)/h30.length).toFixed(1)+'h':'--';
+      renderBarChartData('sleep-chart',data.map(d=>d.sleep_hours||0),'var(--blue)',0,10);
+    }
+  }catch(e){}
 }
 
-async function loadNutritionDetail(){
+// RACES
+async function loadRaces(){
+  try{
+    const races=await api('/races');
+    renderRacesList(races);
+    renderSidebarRaces(races);
+  }catch(e){}
+}
+function renderRacesList(races){
+  const el=document.getElementById('races-list');
+  if(!races.length){el.innerHTML='<div class="card"><div style="color:var(--muted);font-size:.85rem">Cap competició afegida.</div></div>';return;}
+  el.innerHTML=races.map(r=>{
+    const w=Math.floor((r.days_left||0)/7);
+    const pct=Math.max(2,Math.min(98,(1-(r.days_left||0)/365)*100));
+    return `<div class="card" style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div><div style="font-size:.95rem;font-weight:700">${r.name}${r.is_main_goal?` <span style="font-size:.6rem;background:rgba(245,158,11,.2);color:var(--orange);padding:2px 7px;border-radius:8px;font-weight:700">PRINCIPAL</span>`:''}</div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:2px">${r.date}${r.location?' · '+r.location:''} · ${r.type}</div></div>
+        <button onclick="deleteRace(${r.id})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem">✕</button>
+      </div>
+      <div style="display:flex;gap:16px;margin-bottom:8px">
+        <div><div style="font-size:1.4rem;font-weight:900;color:var(--red)">${r.days_left||0}</div><div style="font-size:.62rem;color:var(--muted)">dies</div></div>
+        <div><div style="font-size:1.4rem;font-weight:900;color:var(--orange)">${w}</div><div style="font-size:.62rem;color:var(--muted)">setmanes</div></div>
+      </div>
+      <div style="height:4px;background:var(--border);border-radius:2px"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:2px"></div></div>
+    </div>`;
+  }).join('');
+}
+async function addRace(){
+  const name=document.getElementById('race-name').value.trim();
+  const date=document.getElementById('race-date').value;
+  const type=document.getElementById('race-type').value;
+  if(!name||!date){toast('Omple nom i data');return;}
+  try{
+    await api('/races','POST',{name,date,type,distance:document.getElementById('race-dist').value,location:document.getElementById('race-loc').value,is_main_goal:document.getElementById('race-main').checked});
+    toast('✅ Competició afegida!');
+    ['race-name','race-date','race-dist','race-loc'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('race-main').checked=false;
+    loadRaces();
+  }catch(e){toast('Error afegint');}
+}
+async function deleteRace(id){if(!confirm('Eliminar?'))return;try{await api('/races/delete','POST',{id});toast('Eliminat');loadRaces();}catch(e){toast('Error');}}
+
+// NUTRICIÓ
+async function loadNutrition(){
   try{
     const n=await api('/nutrition/today');
-    document.getElementById('nutrition-detail').innerHTML=`<div class="nut-grid"><div class="nut-box"><div class="nut-val" style="color:var(--orange)">${n.calories_target||'--'}</div><div class="nut-unit">kcal</div></div><div class="nut-box"><div class="nut-val" style="color:var(--red)">${n.carbs_g||'--'}g</div><div class="nut-unit">Carbohid.</div></div><div class="nut-box"><div class="nut-val" style="color:var(--teal)">${n.protein_g||'--'}g</div><div class="nut-unit">Proteina</div></div><div class="nut-box"><div class="nut-val" style="color:var(--dark)">${n.fat_g||'--'}g</div><div class="nut-unit">Greixos</div></div></div>${n.pre_workout?`<div class="nut-tip"><div class="nut-tip-label">Pre-entrenament</div><div class="nut-tip-val">${n.pre_workout}</div></div>`:''}${n.post_workout?`<div class="nut-tip"><div class="nut-tip-label">Post-entrenament</div><div class="nut-tip-val">${n.post_workout}</div></div>`:''}${n.notes?`<div class="nut-tip"><div class="nut-tip-label">Notes</div><div class="nut-tip-val">${n.notes}</div></div>`:''}`;
+    document.getElementById('nut-kcal').textContent=n.calories_target||'--';
+    document.getElementById('nut-carbs').textContent=(n.carbs_g||'--')+'g';
+    document.getElementById('nut-prot').textContent=(n.protein_g||'--')+'g';
+    document.getElementById('nut-fat').textContent=(n.fat_g||'--')+'g';
+    document.getElementById('nut-pre').textContent=n.pre_workout||'--';
+    document.getElementById('nut-post').textContent=n.post_workout||'--';
+    document.getElementById('nut-notes').textContent=n.notes||'--';
   }catch(e){}
 }
 
-// IA CHAT
+// IA
 async function sendAI(){
-  const inp=document.getElementById('ai-input');
-  const q=inp.value.trim();if(!q)return;
+  const inp=document.getElementById('ai-input');const q=inp.value.trim();if(!q)return;
   const msgs=document.getElementById('ai-messages');
   msgs.innerHTML+=`<div class="ai-msg user">${q}</div>`;
   inp.value='';msgs.scrollTop=msgs.scrollHeight;
@@ -600,37 +1252,33 @@ async function sendAI(){
   msgs.innerHTML+=`<div class="ai-msg bot" id="${tid}"><span class="spinner"></span>Pensant...</div>`;
   msgs.scrollTop=msgs.scrollHeight;
   try{const r=await api('/ai/ask','POST',{question:q});document.getElementById(tid).innerHTML=r.answer||'Sense resposta';}
-  catch(e){document.getElementById(tid).textContent='Error de connexio';}
+  catch(e){document.getElementById(tid).textContent='Error de connexió';}
   msgs.scrollTop=msgs.scrollHeight;
 }
 
-// CONFIGURACIO
+// TELEGRAM
+async function saveTelegram(){
+  try{await api('/profile','POST',{notification_time:document.getElementById('tg-time').value});toast('✅ Guardat!');}
+  catch(e){toast('Error');}
+}
+
+// CONFIGURACIÓ
 async function loadSettings(){
   try{
-    const [p,races,avail]=await Promise.allSettled([api('/profile'),api('/races'),api('/availability')]);
-    if(p.status==='fulfilled'){
-      const x=p.value;
-      document.getElementById('s-name').value=x.name||'';
-      document.getElementById('s-weight').value=x.weight_kg||'';
-      document.getElementById('s-waist').value=x.waist_cm||'';
-      document.getElementById('s-lang').value=x.language||'ca';
-      document.getElementById('s-ai-provider').value=x.ai_provider||'claude';
-      document.getElementById('s-notif-time').value=x.notification_time||'07:00';
-      document.getElementById('s-garmin-user').value=x.garmin_user||'';
-      if(x.telegram_chat_id){document.getElementById('telegram-status').innerHTML='&#x2705; Telegram connectat (chat: '+x.telegram_chat_id+')';document.getElementById('telegram-status').style.color='var(--teal)';}
-      updateAIFields();
+    const p=await api('/profile');
+    document.getElementById('s-name').value=p.name||'';
+    document.getElementById('s-weight').value=p.weight_kg||'';
+    document.getElementById('s-waist').value=p.waist_cm||'';
+    document.getElementById('s-lang').value=p.language||'ca';
+    document.getElementById('s-ai-provider').value=p.ai_provider||'claude';
+    document.getElementById('s-garmin-user').value=p.garmin_user||'';
+    document.getElementById('s-wahoo-user').value=p.wahoo_user||'';
+    if(p.telegram_chat_id){
+      document.getElementById('tg-status').innerHTML=`✅ Telegram connectat (chat: ${p.telegram_chat_id})`;
+      document.getElementById('tg-status').style.color='var(--teal)';
     }
-    if(races.status==='fulfilled') renderRaces(races.value);
-    if(avail.status==='fulfilled') renderAvailability(avail.value);
-    else renderAvailability([]);
-  }catch(e){renderAvailability([]);}
+  }catch(e){}
 }
-
-function updateAIFields(){
-  const prov=document.getElementById('s-ai-provider').value;
-  ['claude','gemini','openai'].forEach(p=>{document.getElementById('ai-f-'+p).style.display=p===prov?'block':'none';});
-}
-
 async function saveSettings(){
   const data={
     name:document.getElementById('s-name').value,
@@ -638,75 +1286,51 @@ async function saveSettings(){
     waist_cm:parseFloat(document.getElementById('s-waist').value)||null,
     language:document.getElementById('s-lang').value,
     ai_provider:document.getElementById('s-ai-provider').value,
-    notification_time:document.getElementById('s-notif-time').value,
     garmin_user:document.getElementById('s-garmin-user').value,
     garmin_pass:document.getElementById('s-garmin-pass').value||undefined,
+    wahoo_user:document.getElementById('s-wahoo-user').value,
+    wahoo_pass:document.getElementById('s-wahoo-pass').value||undefined,
     claude_key:document.getElementById('s-claude-key').value||undefined,
     gemini_key:document.getElementById('s-gemini-key').value||undefined,
     openai_key:document.getElementById('s-openai-key').value||undefined,
   };
-  try{await api('/profile','POST',data);toast('Configuracio guardada!');}catch(e){toast('Error guardant');}
+  try{await api('/profile','POST',data);toast('✅ Configuració guardada!');}catch(e){toast('Error guardant');}
+}
+async function testGarmin(){await saveSettings();showOverlay('Provant Garmin...');try{const r=await api('/garmin/sync','POST');hideOverlay();toast(r.ok?'✅ Garmin OK!':'Error: '+(r.error||'desconegut'));}catch(e){hideOverlay();toast('Error connexió');}}
+async function testWahoo(){toast('Wahoo: afegeix les credencials i guarda la configuració');}
+async function generatePlan(){showOverlay('Generant pla amb IA... (~30 seg)');try{const r=await api('/plan/generate','POST');hideOverlay();if(r.ok){toast('✅ Pla generat! '+r.total+' sessions');nav('plan',document.querySelector('[onclick*="nav(\'plan\'"]'));}else toast('Error: '+(r.error||'desconegut'));}catch(e){hideOverlay();toast('Error connexió');}}
+
+// COS
+async function saveBody(){
+  const w=parseFloat(document.getElementById('body-weight').value)||null;
+  const c=parseFloat(document.getElementById('body-waist').value)||null;
+  if(!w&&!c){toast('Omple almenys un valor');return;}
+  try{await api('/body','POST',{weight_kg:w,waist_cm:c});toast('✅ Mesures guardades!');}catch(e){toast('Error');}
 }
 
-async function testGarmin(){
-  await saveSettings();showLoading('Provant connexio Garmin...');
-  try{const r=await api('/garmin/sync','POST');hideLoading();toast(r.ok?'Garmin connectat!':'Error: '+(r.error||'desconegut'));}
-  catch(e){hideLoading();toast('Error de connexio');}
+// SYNC
+async function syncAll(){
+  showOverlay('Sincronitzant Garmin...');
+  try{const r=await api('/garmin/sync','POST');hideOverlay();if(r.ok){toast('✅ Garmin sincronitzat!');loadDashboard();}else toast('Error: '+(r.error||'desconegut'));}
+  catch(e){hideOverlay();toast('Error connexió');}
 }
 
-function renderRaces(races){
-  const el=document.getElementById('races-list');
-  if(!races.length){el.innerHTML='<div style="color:var(--muted);font-size:.82rem;margin-bottom:8px">Cap competicio afegida</div>';return;}
-  el.innerHTML=races.map(r=>`<div class="race-item"><div><div class="race-name">${r.name}${r.is_main_goal?' <span class="badge badge-gold">Principal</span>':''}</div><div class="race-meta">${r.date} · ${r.type}${r.location?' · '+r.location:''}</div></div><div style="text-align:right"><div class="race-days">${r.days_left||0}</div><div class="race-days-label">dies</div><button onclick="deleteRace(${r.id})" style="background:none;border:none;cursor:pointer;font-size:.7rem;color:var(--muted)">eliminar</button></div></div>`).join('');
-}
-
-async function addRace(){
-  const name=document.getElementById('race-name').value.trim();
-  const date=document.getElementById('race-date').value;
-  const type=document.getElementById('race-type').value;
-  if(!name||!date){toast('Omple el nom i la data');return;}
-  try{
-    await api('/races','POST',{name,date,type,distance:document.getElementById('race-dist').value,location:document.getElementById('race-loc').value,is_main_goal:document.getElementById('race-main').checked});
-    toast('Competicio afegida!');
-    ['race-name','race-date','race-dist','race-loc'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('race-main').checked=false;
-    loadSettings();
-  }catch(e){toast('Error afegint');}
-}
-
-async function deleteRace(id){
-  if(!confirm('Eliminar aquesta competicio?'))return;
-  try{await api('/races/delete','POST',{id});toast('Eliminat');loadSettings();}catch(e){toast('Error');}
-}
-
-const DAY_CA=['Diumenge','Dilluns','Dimarts','Dimecres','Dijous','Divendres','Dissabte'];
-function renderAvailability(avail){
-  const dows=[1,2,3,4,5,6,0];
-  const defaults=dows.map(dow=>{
-    const ex=avail.find(a=>a.day_of_week===dow);
-    return ex||{day_of_week:dow,available:1,max_duration_min:90,preferred_time:'07:00'};
-  });
-  document.getElementById('availability-grid').innerHTML=defaults.map((d,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)"><label style="min-width:75px;font-size:.8rem;font-weight:600">${DAY_CA[d.day_of_week]}</label><input type="checkbox" id="av-${i}" ${d.available?'checked':''} style="width:18px;height:18px;accent-color:var(--red)"/><input type="number" id="av-dur-${i}" value="${d.max_duration_min||90}" min="15" max="360" step="15" style="width:55px;border:1.5px solid var(--border);border-radius:6px;padding:4px 5px;font-size:.78rem;text-align:center"/><span style="font-size:.7rem;color:var(--muted)">min</span><input type="time" id="av-time-${i}" value="${d.preferred_time||'07:00'}" style="border:1.5px solid var(--border);border-radius:6px;padding:4px 6px;font-size:.78rem;flex:1"/></div>`).join('');
-}
-
-async function saveAvailability(){
-  const dows=[1,2,3,4,5,6,0];
-  const items=dows.map((dow,i)=>({day_of_week:dow,available:document.getElementById('av-'+i)?.checked?1:0,max_duration_min:parseInt(document.getElementById('av-dur-'+i)?.value)||90,preferred_time:document.getElementById('av-time-'+i)?.value||'07:00',sports_allowed:'running,cycling,swimming,strength,stretching'}));
-  try{await api('/availability','POST',items);toast('Disponibilitat guardada!');}catch(e){toast('Error guardant');}
-}
-
-async function blockDay(){
-  const date=document.getElementById('block-date').value;
-  const reason=document.getElementById('block-reason').value;
-  if(!date){toast('Selecciona una data');return;}
-  try{await api('/blocked','POST',{date,reason});toast('Dia blocat!');document.getElementById('block-date').value='';document.getElementById('block-reason').value='';}
-  catch(e){toast('Error');}
+// GRÀFICA HELPER
+function renderBarChartData(id,data,color,min,max){
+  const el=document.getElementById(id);if(!el)return;
+  if(!data.length){el.innerHTML='<div style="color:var(--muted);font-size:.8rem;margin:auto">Sense dades</div>';return;}
+  const range=max-min||1;
+  const step=Math.max(1,Math.floor(data.length/6));
+  el.innerHTML=data.map((v,i)=>`<div class="bar-wrap">
+    <div class="bar" style="height:${v?Math.max(3,((v-min)/range)*100):2}%;background:${v?color:'var(--border)'};" title="${v||'--'}"></div>
+    <div class="bar-label">${i%step===0&&data.length>0?String(i+1):''}</div>
+  </div>`).join('');
 }
 
 // INIT
 window.addEventListener('load',()=>{
   loadDashboard();
-  if(BACKEND.includes('EL-TEU-USUARI')) setTimeout(()=>toast('Configura el BACKEND i SECRET a index.html',6000),800);
+  api('/races').then(r=>renderSidebarRaces(r)).catch(()=>{});
 });
 </script>
 </body>
